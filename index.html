@@ -12,8 +12,8 @@
 <meta property="og:description" content="辺の長さ・角度から一般三角形と直角三角形を解き、勾配・テーパー、座標からの距離と角度も求める。図の頂点をドラッグして形を変えられる">
 <meta property="og:url" content="https://kotaooka.github.io/triangle-calc/">
 <meta property="og:locale" content="ja_JP">
-<meta name="theme-color" content="#1f5f6b" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#131a1c" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#1d5c96" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#11161b" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -26,36 +26,37 @@
   try { const t = localStorage.getItem("qc-workbench-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) { /* 保存できない環境 */ }
 </script>
 <style>
-/* 字体は QC Workbench の各ツールと共通。レイアウト：左に入力、右に作図と結果。狭い画面では縦に積む。製図用フィルムの淡い青緑と墨色、計算で出た値だけ朱色 */
+/* 字体は QC Workbench の各ツールと共通。レイアウト：左に入力、右に作図と結果。狭い画面では縦に積む。配色は QC Workbench の各ツールと共通。計算で出た値だけ朱色 */
 :root {
-  --bg: #eef2f1;
-  --surface: #fbfcfc;
-  --ink: #1d2a2e;
-  --ink2: #4a5a5f;
-  --muted: #7d8c90;
-  --line: #cfd9d8;
-  --grid: #e1e8e7;
-  --accent: #1f5f6b;
-  --accent-weak: #dcebec;
+  --bg: #eef1f4;
+  --surface: #ffffff;
+  --ink: #15212c;
+  --ink2: #475563;
+  --muted: #74818e;
+  --line: #d5dce3;
+  --grid: #e4e9ee;
+  --accent: #1d5c96;
+  --accent-ink: #ffffff;
+  --accent-weak: #e1ebf5;
   --calc: #b4441f;
   --calc-weak: #f6e3db;
-  --ng: #b3261e;
-  --ng-weak: #f7dedc;
+  --ng: #ad2a22;
+  --ng-weak: #f8e4e2;
   --f-ui: "BIZ UDPGothic", "Yu Gothic UI", "Meiryo", system-ui, sans-serif;
   --f-num: "IBM Plex Mono", "Consolas", "Menlo", monospace;
   --r: 8px;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #131a1c; --surface: #1a2326; --ink: #e3ebec; --ink2: #b3c1c4; --muted: #7f9094;
-    --line: #2f3d41; --grid: #233034; --accent: #7cc2cc; --accent-weak: #1f3a3f;
-    --calc: #f0a07a; --calc-weak: #3d2a22; --ng: #f2948d; --ng-weak: #3e2422; color-scheme: dark;
+    --bg: #11161b; --surface: #19212a; --ink: #e6ecf2; --ink2: #a9b5c1; --muted: #7d8996;
+    --line: #2b3641; --grid: #253039; --accent: #6ba6df; --accent-ink: #0d1620; --accent-weak: #1c2f43;
+    --calc: #f0a07a; --calc-weak: #3d2a22; --ng: #f07a70; --ng-weak: #3a1c1a; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #131a1c; --surface: #1a2326; --ink: #e3ebec; --ink2: #b3c1c4; --muted: #7f9094;
-  --line: #2f3d41; --grid: #233034; --accent: #7cc2cc; --accent-weak: #1f3a3f;
-  --calc: #f0a07a; --calc-weak: #3d2a22; --ng: #f2948d; --ng-weak: #3e2422; color-scheme: dark;
+  --bg: #11161b; --surface: #19212a; --ink: #e6ecf2; --ink2: #a9b5c1; --muted: #7d8996;
+  --line: #2b3641; --grid: #253039; --accent: #6ba6df; --accent-ink: #0d1620; --accent-weak: #1c2f43;
+  --calc: #f0a07a; --calc-weak: #3d2a22; --ng: #f07a70; --ng-weak: #3a1c1a; color-scheme: dark;
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
@@ -96,7 +97,7 @@ input.bad { border-color: var(--ng); background: var(--ng-weak); }
 .btn:hover { border-color: var(--accent); }
 .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
 .seg button { border: 0; background: var(--bg); color: var(--ink2); font: inherit; font-size: .85rem; padding: 6px 12px; cursor: pointer; }
-.seg button[aria-pressed="true"] { background: var(--accent); color: var(--surface); font-weight: 700; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); font-weight: 700; }
 .msg { border-radius: 6px; padding: 8px 10px; font-size: .88rem; }
 .msg.err { background: var(--ng-weak); color: var(--ng); }
 .msg.info { background: var(--accent-weak); color: var(--ink); }

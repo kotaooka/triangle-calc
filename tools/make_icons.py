@@ -4,7 +4,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 
 OUT = Path(__file__).resolve().parent.parent / 'icons'
-BG, GRID, WHITE, CALC = (31, 95, 107), (52, 118, 130), (255, 255, 255), (240, 160, 122)
+BG, GRID, WHITE, CALC = (29, 92, 150), (50, 112, 168), (255, 255, 255), (240, 160, 122)
 
 def draw(size, maskable=False):
     s = 4 * size  # 4 倍で描いて縮小（縁を滑らかにする）
@@ -31,7 +31,7 @@ def draw(size, maskable=False):
     B = (c - s * 0.30 * k, c + s * 0.22 * k)
     C = (c + s * 0.32 * k, c + s * 0.22 * k)
     A = (c - s * 0.08 * k, c - s * 0.30 * k)
-    d.polygon([A, B, C], outline=None, fill=(64, 128, 139))
+    d.polygon([A, B, C], outline=None, fill=(62, 122, 176))
     d.line([A, B, C, A], fill=WHITE, width=w, joint='curve')
     # 角 B の弧（計算した値の色）
     r = s * 0.13 * k
