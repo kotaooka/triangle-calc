@@ -125,16 +125,16 @@
     const vals = GIDS.map((id, i) => { const el = $(id); el.classList.remove('bad', 'calc'); return i < 3 ? parseLen(el.value) : parseAngle(el.value); });
     GIDS.forEach((id, i) => { if (Number.isNaN(vals[i])) $(id).classList.add('bad'); });
     const fig = $('g-fig'), res = $('g-res'), sol = $('g-sol');
-    const empty = () => { fig.innerHTML = `${svgOpen(560, 320, '三角形の図')}${grid(560, 320)}${label(280, 160, '値を 3 つ入れると図が出ます', css('--muted'), 'middle', 13, 400)}</svg>`; res.innerHTML = ''; sol.hidden = true; copies.g = null; };
+    const empty = () => { fig.innerHTML = `${svgOpen(560, 320, '三角形の図')}${grid(560, 320)}${label(280, 160, '値を3つ入れると図が出ます', css('--muted'), 'middle', 13, 400)}</svg>`; res.innerHTML = ''; sol.hidden = true; copies.g = null; };
     GIDS.forEach(id => { $(id).placeholder = ''; });
     if (vals.some(v => Number.isNaN(v))) { msg('g-msg', 'err', '読めない値があります。数字（角は度・度分秒）で入れてください。'); return empty(); }
     const r = solveTriangle(vals.slice(0, 3), vals.slice(3));
     if (r.error) { msg('g-msg', vals.filter(v => v != null).length < 3 ? 'info' : 'err', r.error); return empty(); }
-    msg('g-msg', r.length === 2 ? 'info' : '', r.length === 2 ? '二辺とその間にない角の組み合わせなので、条件に合う三角形が 2 つあります（図の上のボタンで切り替え）。' : '');
+    msg('g-msg', r.length === 2 ? 'info' : '', r.length === 2 ? '二辺とその間にない角の組み合わせなので、条件に合う三角形が2つあります（図の上のボタンで切り替え）。' : '');
     if (gPrefer && r.length === 2) gSol = r[0].g.reduce((a, v, k) => a + Math.abs(v - gPrefer[k]), 0) <= r[1].g.reduce((a, v, k) => a + Math.abs(v - gPrefer[k]), 0) ? 0 : 1;
     if (gSol >= r.length) gSol = 0;
     sol.hidden = r.length < 2;
-    sol.innerHTML = r.length < 2 ? '' : r.map((x, i) => `<button class="btn" type="button" data-sol="${i}" aria-pressed="${i === gSol}" style="${i === gSol ? `border-color:${css('--accent')};font-weight:700` : ''}">解 ${i + 1}（角 ${'ABC'[x.g.findIndex((v, k) => vals[3 + k] == null)]} = ${fa(x.g.find((v, k) => vals[3 + k] == null))}）</button>`).join('');
+    sol.innerHTML = r.length < 2 ? '' : r.map((x, i) => `<button class="btn" type="button" data-sol="${i}" aria-pressed="${i === gSol}" style="${i === gSol ? `border-color:${css('--accent')};font-weight:700` : ''}">解${i + 1}（角${'ABC'[x.g.findIndex((v, k) => vals[3 + k] == null)]} = ${fa(x.g.find((v, k) => vals[3 + k] == null))}）</button>`).join('');
     const S = r[gSol];
     const known = vals.map(v => v != null);
     // 入っていない欄に計算値を薄く表示
@@ -148,12 +148,12 @@
     fig.innerHTML = svgOpen(F.W, F.H, '三角形の図') + grid(F.W, F.H) +
       drawTri(V, ['A', 'B', 'C'], S.s.map((v, i) => `${'abc'[i]} = ${f(v)}`), known.slice(0, 3), S.g.map(v => fa(v)), known.slice(3)) + handles(V, [0, 1, 2]) + '</svg>';
     const rows = [
-      ...[0, 1, 2].map(i => [`辺 ${'abc'[i]}`, f(S.s[i]), null, !known[i]]),
-      ...[0, 1, 2].map(i => [`角 ${'ABC'[i]}`, fa(S.g[i]), `${toDMS(S.g[i])}　${(S.g[i] * RAD).toFixed(DIG + 2)} rad`, !known[3 + i]]),
+      ...[0, 1, 2].map(i => [`辺${'abc'[i]}`, f(S.s[i]), null, !known[i]]),
+      ...[0, 1, 2].map(i => [`角${'ABC'[i]}`, fa(S.g[i]), `${toDMS(S.g[i])}　${(S.g[i] * RAD).toFixed(DIG + 2)} rad`, !known[3 + i]]),
       ['面積', f(S.area), null, true], ['周の長さ', f(S.per), null, true],
-      ...[0, 1, 2].map(i => [`高さ（辺 ${'abc'[i]} を底辺）`, f(S.h[i]), null, true]),
-      ...[0, 1, 2].map(i => [`中線（辺 ${'abc'[i]} の中点へ）`, f(S.m[i]), null, true]),
-      ['外接円の半径 R', f(S.R), null, true], ['内接円の半径 r', f(S.r), null, true],
+      ...[0, 1, 2].map(i => [`高さ（辺${'abc'[i]}を底辺）`, f(S.h[i]), null, true]),
+      ...[0, 1, 2].map(i => [`中線（辺${'abc'[i]}の中点へ）`, f(S.m[i]), null, true]),
+      ['外接円の半径R', f(S.R), null, true], ['内接円の半径r', f(S.r), null, true],
     ];
     res.innerHTML = resTable(rows);
     copies.g = rows;
@@ -185,9 +185,9 @@
     const x = parseLen($('r-x').value), y = parseLen($('r-y').value), r = parseLen($('r-h').value), t0 = parseAngle($('r-t').value), g = parseLen($('r-g').value);
     [['r-x', x], ['r-y', y], ['r-h', r], ['r-t', t0], ['r-g', g]].forEach(([id, v]) => { if (Number.isNaN(v)) $(id).classList.add('bad'); });
     const fig = $('r-fig'), res = $('r-res');
-    const empty = () => { fig.innerHTML = `${svgOpen(560, 320, '直角三角形の図')}${grid(560, 320)}${label(280, 160, '値を 2 つ入れると図が出ます', css('--muted'), 'middle', 13, 400)}</svg>`; res.innerHTML = ''; copies.r = null; };
+    const empty = () => { fig.innerHTML = `${svgOpen(560, 320, '直角三角形の図')}${grid(560, 320)}${label(280, 160, '値を2つ入れると図が出ます', css('--muted'), 'middle', 13, 400)}</svg>`; res.innerHTML = ''; copies.r = null; };
     if ([x, y, r, t0, g].some(v => Number.isNaN(v))) { msg('r-msg', 'err', '読めない値があります。数字で入れてください。'); return empty(); }
-    if (t0 != null && g != null) { msg('r-msg', 'err', '角度 θ と勾配は同じ情報です。どちらか一方だけ入れてください。'); return empty(); }
+    if (t0 != null && g != null) { msg('r-msg', 'err', '角度θと勾配は同じ情報です。どちらか一方だけ入れてください。'); return empty(); }
     if (g != null && !(g > 0)) { msg('r-msg', 'err', '勾配は正の数で入れてください。'); return empty(); }
     const t = g != null ? Math.atan(g / 100) / RAD : t0;
     const S = solveRight({ x, y, r, t });
@@ -203,10 +203,10 @@
     fig.innerHTML = svgOpen(F.W, F.H, '直角三角形の図') + grid(F.W, F.H) +
       drawTri(V, ['', '', ''], [`y = ${f(S.y)}`, `r = ${f(S.r)}`, `x = ${f(S.x)}`], [k.y, k.r, k.x], [`θ = ${fa(S.t)}`, '', fa(90 - S.t)], [k.t || k.g, true, false], 1) + handles(V, [1, 2]) + '</svg>';
     const rows = [
-      ['底辺 x', f(S.x), null, !k.x], ['高さ y', f(S.y), null, !k.y], ['斜辺 r', f(S.r), null, !k.r],
-      ['角度 θ', fa(S.t), `${toDMS(S.t)}　${(S.t * RAD).toFixed(DIG + 2)} rad`, !k.t],
+      ['底辺x', f(S.x), null, !k.x], ['高さy', f(S.y), null, !k.y], ['斜辺r', f(S.r), null, !k.r],
+      ['角度θ', fa(S.t), `${toDMS(S.t)}　${(S.t * RAD).toFixed(DIG + 2)} rad`, !k.t],
       ['もう一方の角（90° − θ）', fa(90 - S.t), toDMS(90 - S.t), true],
-      ['勾配（y ÷ x）', `${f(S.grade)} %`, null, !k.g], ['勾配の比 1 : n（n = x ÷ y）', `1 : ${f(S.n)}`, null, true],
+      ['勾配（y ÷ x）', `${f(S.grade)} %`, null, !k.g], ['勾配の比1 : n（n = x ÷ y）', `1 : ${f(S.n)}`, null, true],
       ['sin θ', f(Math.sin(S.t * RAD)), null, true], ['cos θ', f(Math.cos(S.t * RAD)), null, true], ['tan θ', f(Math.tan(S.t * RAD)), null, true],
       ['面積', f(S.area), null, true],
     ];
@@ -240,7 +240,7 @@
     const k = { D: v.D != null, d: v.d != null, L: v.L != null, a: v.a != null };
     if (!k.D) $('t-D').placeholder = f(S.D); if (!k.d) $('t-d').placeholder = f(S.d); if (!k.L) $('t-L').placeholder = f(S.L); if (!k.a) $('t-a').placeholder = f(S.a);
     $('t-res').innerHTML = resTable([
-      ['大径 D', f(S.D), null, !k.D], ['小径 d', f(S.d), null, !k.d], ['長さ L', f(S.L), null, !k.L],
+      ['大径D', f(S.D), null, !k.D], ['小径d', f(S.d), null, !k.d], ['長さL', f(S.L), null, !k.L],
       ['テーパー角（全角）', fa(S.a), toDMS(S.a), !k.a], ['半角（片側）', fa(S.half), toDMS(S.half), true],
       ['テーパー比 (D − d) ÷ L', `1 : ${f(S.inv)}`, `${f(S.ratio)}`, true],
     ]);
@@ -262,42 +262,42 @@
     const fig = $('c-fig'), res = $('c-res');
     const empty = () => { fig.innerHTML = `${svgOpen(560, 320, '座標の図')}${grid(560, 320)}${label(280, 160, '座標を入れると図が出ます', css('--muted'), 'middle', 13, 400)}</svg>`; res.innerHTML = ''; copies.c = null; };
     if (vals.some(v => Number.isNaN(v))) { msg('c-msg', 'err', '読めない値があります。数字で入れてください。'); return empty(); }
-    if (vals.some(v => v == null)) { msg('c-msg', 'info', 'すべての点の X と Y を入れてください。'); return empty(); }
+    if (vals.some(v => v == null)) { msg('c-msg', 'info', 'すべての点のXとYを入れてください。'); return empty(); }
     const P = []; for (let i = 0; i < cMode; i++) P.push([vals[2 * i], vals[2 * i + 1]]);
     const ink = css('--ink'), calc = css('--calc'), acc = css('--accent');
     if (cMode === 2) {
       const S = coord2(P[0], P[1]);
-      if (S.dist === 0) { msg('c-msg', 'err', '2 点が同じ座標です。'); return empty(); }
+      if (S.dist === 0) { msg('c-msg', 'err', '2点が同じ座標です。'); return empty(); }
       msg('c-msg', '', '');
       const F = frame([P[0], P[1], [P[1][0], P[0][1]]]), A = F.P(P[0]), B = F.P(P[1]), Cc = F.P([P[1][0], P[0][1]]);
       lastFrame.coord = F;
-      fig.innerHTML = svgOpen(F.W, F.H, '2 点の図') + grid(F.W, F.H) +
+      fig.innerHTML = svgOpen(F.W, F.H, '2点の図') + grid(F.W, F.H) +
         `<line x1="${A[0]}" y1="${A[1]}" x2="${Cc[0]}" y2="${Cc[1]}" stroke="${css('--muted')}" stroke-dasharray="5 4"/><line x1="${Cc[0]}" y1="${Cc[1]}" x2="${B[0]}" y2="${B[1]}" stroke="${css('--muted')}" stroke-dasharray="5 4"/>` +
         `<line x1="${A[0]}" y1="${A[1]}" x2="${B[0]}" y2="${B[1]}" stroke="${acc}" stroke-width="2.2"/>` +
         [A, B].map(p => `<circle cx="${p[0]}" cy="${p[1]}" r="4" fill="${ink}"/>`).join('') +
         label(A[0], A[1] + 16, 'P1', ink, 'middle', 13, 700) + label(B[0], B[1] - 16, 'P2', ink, 'middle', 13, 700) +
-        label((A[0] + B[0]) / 2, (A[1] + B[1]) / 2 - 14, `距離 ${f(S.dist)}`, calc, 'middle', 12.5) +
+        label((A[0] + B[0]) / 2, (A[1] + B[1]) / 2 - 14, `距離${f(S.dist)}`, calc, 'middle', 12.5) +
         label((A[0] + Cc[0]) / 2, Cc[1] + 14, `ΔX ${f(S.dx)}`, calc, 'middle', 12) + label(Cc[0] + 8, (Cc[1] + B[1]) / 2, `ΔY ${f(S.dy)}`, calc, 'start', 12) + handles([A, B], [0, 1]) + '</svg>';
       const rows = [['ΔX（P2 − P1）', f(S.dx), null, true], ['ΔY（P2 − P1）', f(S.dy), null, true], ['距離', f(S.dist), null, true],
-        ['方向角（+X から反時計回り）', fa(S.dir), toDMS(S.dir), true], ['勾配（ΔY ÷ ΔX）', S.grade == null ? '―（垂直）' : `${f(S.grade)} %`, null, true]];
+        ['方向角（+Xから反時計回り）', fa(S.dir), toDMS(S.dir), true], ['勾配（ΔY ÷ ΔX）', S.grade == null ? '―（垂直）' : `${f(S.grade)} %`, null, true]];
       res.innerHTML = resTable(rows); copies.c = rows; return;
     }
     const S = coord3(P);
     if (S.error) { msg('c-msg', 'err', S.error); return empty(); }
-    if (S.collinear) { msg('c-msg', 'err', '3 点が一直線上にあるので三角形になりません。'); return empty(); }
+    if (S.collinear) { msg('c-msg', 'err', '3点が一直線上にあるので三角形になりません。'); return empty(); }
     msg('c-msg', '', '');
     const F = frame(P), V = P.map(F.P);
     lastFrame.coord = F;
-    fig.innerHTML = svgOpen(F.W, F.H, '3 点の図') + grid(F.W, F.H) +
+    fig.innerHTML = svgOpen(F.W, F.H, '3点の図') + grid(F.W, F.H) +
       drawTri(V, ['P1', 'P2', 'P3'], S.L.map((v, i) => f(v)), [false, false, false], S.ang.map(fa), [false, false, false]) +
       handles(V, [0, 1, 2]) + '</svg>';
     const nm = ['P2–P3', 'P3–P1', 'P1–P2'];
     const rows = [
-      ...[2, 0, 1].map(i => [`辺 ${nm[i]}`, f(S.L[i]), null, true]),
-      ...[0, 1, 2].map(i => [`角 P${i + 1}`, fa(S.ang[i]), toDMS(S.ang[i]), true]),
+      ...[2, 0, 1].map(i => [`辺${nm[i]}`, f(S.L[i]), null, true]),
+      ...[0, 1, 2].map(i => [`角P${i + 1}`, fa(S.ang[i]), toDMS(S.ang[i]), true]),
       ['面積', f(S.area), null, true], ['周の長さ', f(S.per), null, true],
-      ...[[0, 1], [1, 2], [2, 0]].map(([i, j]) => [`方向角 P${i + 1}→P${j + 1}`, fa(dirDeg(P[i], P[j])), toDMS(dirDeg(P[i], P[j])), true]),
-      ['点の並び', S.ccw ? 'P1→P2→P3 は反時計回り' : 'P1→P2→P3 は時計回り', null, true],
+      ...[[0, 1], [1, 2], [2, 0]].map(([i, j]) => [`方向角P${i + 1}→P${j + 1}`, fa(dirDeg(P[i], P[j])), toDMS(dirDeg(P[i], P[j])), true]),
+      ['点の並び', S.ccw ? 'P1→P2→P3は反時計回り' : 'P1→P2→P3は時計回り', null, true],
     ];
     res.innerHTML = resTable(rows); copies.c = rows;
   }
@@ -317,14 +317,14 @@
     if (!rows) { toast('先に値を入れてください'); return; }
     const strip = s => String(s).replace(/<[^>]+>/g, '').replace(/[°%]/g, '').replace(/^1 : /, '').trim();
     const txt = rows.map(r => `${r[0]}\t${strip(r[1])}`).join('\n');
-    const done = () => toast('コピーしました。Excel に貼り付けられます');
+    const done = () => toast('コピーしました。Excelに貼り付けられます');
     try {
       navigator.clipboard.writeText(txt).then(done, () => fallback(txt));
     } catch (e) { fallback(txt); }
     function fallback(t) {
       const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select();
       let ok = false; try { ok = document.execCommand('copy'); } catch (e) { /* 失敗 */ }
-      ta.remove(); toast(ok ? 'コピーしました。Excel に貼り付けられます' : 'コピーできませんでした。表を選んでコピーしてください');
+      ta.remove(); toast(ok ? 'コピーしました。Excelに貼り付けられます' : 'コピーできませんでした。表を選んでコピーしてください');
     }
   }));
 

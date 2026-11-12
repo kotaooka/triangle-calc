@@ -60,7 +60,7 @@
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-html, body { margin: 0; }
+html, body { text-autospace: normal; margin: 0; }
 body { background: var(--bg); color: var(--ink); font-family: var(--f-ui); font-size: 15px; line-height: 1.6; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
 header.top { position: sticky; top: 0; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
 .top-in { max-width: 1080px; margin: 0 auto; padding-inline: 16px; padding-block: 12px 0; }
@@ -149,8 +149,8 @@ footer a { color: inherit; }
   <!-- 一般三角形 -->
   <section class="panel" id="p-general" data-panel="general">
     <div class="box">
-      <h2>わかっている値を 3 つ入れる</h2>
-      <p class="hint">辺を 1 つ以上含めてください。角は「35」「35.5」「35°30′」「35 30 15」（度 分 秒）の形で入れられます。</p>
+      <h2>わかっている値を3つ入れる</h2>
+      <p class="hint">辺を1つ以上含めてください。角は「35」「35.5」「35°30′」「35 30 15」（度 分 秒）の形で入れられます。</p>
       <div class="fields three">
         <div class="field"><label for="g-a">辺 <b>a</b>（BC）</label><input type="text" id="g-a" inputmode="decimal"></div>
         <div class="field"><label for="g-b">辺 <b>b</b>（CA）</label><input type="text" id="g-b" inputmode="decimal"></div>
@@ -168,15 +168,15 @@ footer a { color: inherit; }
       <div class="legend"><span style="--c:var(--ink)">入れた値</span><span style="--c:var(--calc)">計算した値</span></div>
       <p class="hint">頂点の ○ をドラッグすると、入れた値が変わります。</p>
       <div class="res-wrap" id="g-res"></div>
-      <div class="row"><button class="btn" type="button" data-copy="g">結果をコピー（Excel 用）</button></div>
+      <div class="row"><button class="btn" type="button" data-copy="g">結果をコピー（Excel用）</button></div>
     </div>
   </section>
 
   <!-- 直角三角形・勾配 -->
   <section class="panel" id="p-right" data-panel="right" hidden>
     <div class="box">
-      <h2>わかっている値を 2 つ入れる</h2>
-      <p class="hint">長さを 1 つ以上含めてください。角度 θ は底辺と斜辺のなす角です。勾配は θ の代わりに使えます（θ と勾配は同時に入れない）。</p>
+      <h2>わかっている値を2つ入れる</h2>
+      <p class="hint">長さを1つ以上含めてください。角度θは底辺と斜辺のなす角です。勾配はθの代わりに使えます（θと勾配は同時に入れない）。</p>
       <div class="fields">
         <div class="field"><label for="r-x">底辺 <b>x</b></label><input type="text" id="r-x" inputmode="decimal"></div>
         <div class="field"><label for="r-y">高さ <b>y</b></label><input type="text" id="r-y" inputmode="decimal"></div>
@@ -188,7 +188,7 @@ footer a { color: inherit; }
       <div id="r-msg"></div>
       <div class="sub">
         <h2>テーパー</h2>
-        <p class="hint">大径 D・小径 d・長さ L・テーパー角（全角）のうち 3 つを入れると、残りとテーパー比を出します。</p>
+        <p class="hint">大径D・小径d・長さL・テーパー角（全角）のうち3つを入れると、残りとテーパー比を出します。</p>
         <div class="fields">
           <div class="field"><label for="t-D">大径 <b>D</b></label><input type="text" id="t-D" inputmode="decimal"></div>
           <div class="field"><label for="t-d">小径 <b>d</b></label><input type="text" id="t-d" inputmode="decimal"></div>
@@ -202,9 +202,9 @@ footer a { color: inherit; }
     <div class="box">
       <div class="figure" id="r-fig"></div>
       <div class="legend"><span style="--c:var(--ink)">入れた値</span><span style="--c:var(--calc)">計算した値</span></div>
-      <p class="hint">頂点の ○ をドラッグすると、入れた値が変わります（θ の頂点は固定）。</p>
+      <p class="hint">頂点の ○ をドラッグすると、入れた値が変わります（θの頂点は固定）。</p>
       <div class="res-wrap" id="r-res"></div>
-      <div class="row"><button class="btn" type="button" data-copy="r">結果をコピー（Excel 用）</button></div>
+      <div class="row"><button class="btn" type="button" data-copy="r">結果をコピー（Excel用）</button></div>
     </div>
   </section>
 
@@ -212,15 +212,15 @@ footer a { color: inherit; }
   <section class="panel" id="p-coord" data-panel="coord" hidden>
     <div class="box">
       <h2>点の座標を入れる</h2>
-      <div class="seg" id="c-mode" role="group" aria-label="点の数"><button type="button" data-v="2" aria-pressed="false">2 点</button><button type="button" data-v="3" aria-pressed="true">3 点</button></div>
-      <p class="hint">角度は +X 方向から反時計回りに測ります（0〜360°）。</p>
+      <div class="seg" id="c-mode" role="group" aria-label="点の数"><button type="button" data-v="2" aria-pressed="false">2点</button><button type="button" data-v="3" aria-pressed="true">3点</button></div>
+      <p class="hint">角度は +X方向から反時計回りに測ります（0〜360°）。</p>
       <div class="fields">
-        <div class="field"><label for="c-ax">点 <b>P1</b> の X</label><input type="text" id="c-ax" inputmode="decimal"></div>
-        <div class="field"><label for="c-ay">点 <b>P1</b> の Y</label><input type="text" id="c-ay" inputmode="decimal"></div>
-        <div class="field"><label for="c-bx">点 <b>P2</b> の X</label><input type="text" id="c-bx" inputmode="decimal"></div>
-        <div class="field"><label for="c-by">点 <b>P2</b> の Y</label><input type="text" id="c-by" inputmode="decimal"></div>
-        <div class="field c3"><label for="c-cx">点 <b>P3</b> の X</label><input type="text" id="c-cx" inputmode="decimal"></div>
-        <div class="field c3"><label for="c-cy">点 <b>P3</b> の Y</label><input type="text" id="c-cy" inputmode="decimal"></div>
+        <div class="field"><label for="c-ax">点 <b>P1</b> のX</label><input type="text" id="c-ax" inputmode="decimal"></div>
+        <div class="field"><label for="c-ay">点 <b>P1</b> のY</label><input type="text" id="c-ay" inputmode="decimal"></div>
+        <div class="field"><label for="c-bx">点 <b>P2</b> のX</label><input type="text" id="c-bx" inputmode="decimal"></div>
+        <div class="field"><label for="c-by">点 <b>P2</b> のY</label><input type="text" id="c-by" inputmode="decimal"></div>
+        <div class="field c3"><label for="c-cx">点 <b>P3</b> のX</label><input type="text" id="c-cx" inputmode="decimal"></div>
+        <div class="field c3"><label for="c-cy">点 <b>P3</b> のY</label><input type="text" id="c-cy" inputmode="decimal"></div>
       </div>
       <div class="row"><button class="btn" type="button" id="c-clear">入力を消す</button><button class="btn" type="button" id="c-example">例を入れる</button></div>
       <div id="c-msg"></div>
@@ -229,7 +229,7 @@ footer a { color: inherit; }
       <div class="figure" id="c-fig"></div>
       <p class="hint">点の ○ をドラッグすると、座標が変わります。</p>
       <div class="res-wrap" id="c-res"></div>
-      <div class="row"><button class="btn" type="button" data-copy="c">結果をコピー（Excel 用）</button></div>
+      <div class="row"><button class="btn" type="button" data-copy="c">結果をコピー（Excel用）</button></div>
     </div>
   </section>
 

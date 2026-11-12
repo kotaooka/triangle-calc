@@ -34,10 +34,10 @@
     const s = sIn.slice(), g = gIn.slice();
     const ns = s.filter(v => v != null).length, ng = g.filter(v => v != null).length;
     if (s.some(v => v != null && !(v > 0))) return { error: '辺の長さは正の数で入れてください。' };
-    if (g.some(v => v != null && !(v > 0 && v < 180))) return { error: '角度は 0° より大きく 180° より小さい値で入れてください。' };
-    if (ns + ng < 3) return { error: `あと ${3 - ns - ng} つ値を入れてください。` };
-    if (ns + ng > 3) return { error: '値が 4 つ以上入っています。わかっている値を 3 つだけ残してください（多いと矛盾することがあるため）。' };
-    if (ns === 0) return { error: '角だけでは大きさが決まりません。辺を 1 つ以上入れてください。' };
+    if (g.some(v => v != null && !(v > 0 && v < 180))) return { error: '角度は0° より大きく180° より小さい値で入れてください。' };
+    if (ns + ng < 3) return { error: `あと${3 - ns - ng}つ値を入れてください。` };
+    if (ns + ng > 3) return { error: '値が4つ以上入っています。わかっている値を3つだけ残してください（多いと矛盾することがあるため）。' };
+    if (ns === 0) return { error: '角だけでは大きさが決まりません。辺を1つ以上入れてください。' };
     const sin = d => Math.sin(d * RAD), cos = d => Math.cos(d * RAD);
     const acosD = x => Math.acos(Math.max(-1, Math.min(1, x))) / RAD;
     const finish = (s, g) => {
@@ -50,13 +50,13 @@
     const fromSides = s => [0, 1, 2].map(i => acosD((s[(i + 1) % 3] ** 2 + s[(i + 2) % 3] ** 2 - s[i] ** 2) / (2 * s[(i + 1) % 3] * s[(i + 2) % 3])));
     if (ns === 3) {
       const [a, b, c] = s, mx = Math.max(a, b, c);
-      if (mx >= a + b + c - mx) return { error: '三角形になりません。いちばん長い辺は、残り 2 辺の和より短い必要があります。' };
+      if (mx >= a + b + c - mx) return { error: '三角形になりません。いちばん長い辺は、残り2辺の和より短い必要があります。' };
       return [finish(s, fromSides(s))];
     }
     if (ng === 2) {
       const k = g.findIndex(v => v == null);
       g[k] = 180 - g[(k + 1) % 3] - g[(k + 2) % 3];
-      if (!(g[k] > 1e-12)) return { error: '2 つの角の和が 180° 以上なので三角形になりません。' };
+      if (!(g[k] > 1e-12)) return { error: '2つの角の和が180° 以上なので三角形になりません。' };
       const j = s.findIndex(v => v != null), k2 = s[j] / sin(g[j]);
       return [finish([0, 1, 2].map(i => i === j ? s[i] : k2 * sin(g[i])), g)];
     }
@@ -71,7 +71,7 @@
     // 挟まない角（二辺と対角）：解が 0・1・2 個
     const j = s.findIndex((v, k) => v != null && k !== i), k = 3 - i - j;
     const sj = s[j] * sin(g[i]) / s[i];
-    if (sj > 1 + 1e-12) return { error: `この値では三角形になりません（辺 ${'abc'[i]} が短すぎて、角 ${'ABC'[i]} の向かいに届きません）。` };
+    if (sj > 1 + 1e-12) return { error: `この値では三角形になりません（辺${'abc'[i]}が短すぎて、角${'ABC'[i]}の向かいに届きません）。` };
     const cands = Math.abs(sj - 1) <= 1e-12 ? [90] : [Math.asin(sj) / RAD, 180 - Math.asin(sj) / RAD];
     const out = [];
     for (const gj of cands) {
@@ -81,7 +81,7 @@
       gg[j] = gj; gg[k] = gk; ss[k] = s[i] * sin(gk) / sin(g[i]);
       out.push(finish(ss, gg));
     }
-    if (!out.length) return { error: 'この値では三角形になりません（角の和が 180° を超えます）。' };
+    if (!out.length) return { error: 'この値では三角形になりません（角の和が180° を超えます）。' };
     return out;
   }
 
@@ -90,10 +90,10 @@
   function solveRight({ x, y, r, t }) {
     const nl = [x, y, r].filter(v => v != null).length, na = t != null ? 1 : 0;
     if ([x, y, r].some(v => v != null && !(v > 0))) return { error: '長さは正の数で入れてください。' };
-    if (na && !(t > 0 && t < 90)) return { error: '角度 θ は 0° より大きく 90° より小さい値で入れてください。' };
-    if (nl + na < 2) return { error: `あと ${2 - nl - na} つ値を入れてください。` };
-    if (nl + na > 2) return { error: '値が 3 つ以上入っています。わかっている値を 2 つだけ残してください。' };
-    if (!nl) return { error: '長さを 1 つ以上入れてください。' };
+    if (na && !(t > 0 && t < 90)) return { error: '角度θは0° より大きく90° より小さい値で入れてください。' };
+    if (nl + na < 2) return { error: `あと${2 - nl - na}つ値を入れてください。` };
+    if (nl + na > 2) return { error: '値が3つ以上入っています。わかっている値を2つだけ残してください。' };
+    if (!nl) return { error: '長さを1つ以上入れてください。' };
     if (na) {
       const c = Math.cos(t * RAD), s = Math.sin(t * RAD);
       if (x != null) { r = x / c; y = x * Math.tan(t * RAD); }
@@ -114,9 +114,9 @@
   function solveTaper({ D, d, L, a }) {
     const n = [D, d, L, a].filter(v => v != null).length;
     if (n < 3) return null;
-    if (n > 3) return { error: '4 つとも入っています。3 つだけ残してください。' };
-    if ([D, L].some(v => v != null && !(v > 0)) || (d != null && !(d >= 0))) return { error: '大径・長さは正の数、小径は 0 以上で入れてください。' };
-    if (a != null && !(a > 0 && a < 180)) return { error: 'テーパー角は 0° より大きく 180° より小さい値で入れてください。' };
+    if (n > 3) return { error: '4つとも入っています。3つだけ残してください。' };
+    if ([D, L].some(v => v != null && !(v > 0)) || (d != null && !(d >= 0))) return { error: '大径・長さは正の数、小径は0以上で入れてください。' };
+    if (a != null && !(a > 0 && a < 180)) return { error: 'テーパー角は0° より大きく180° より小さい値で入れてください。' };
     const tn = v => Math.tan(v / 2 * RAD);
     if (a == null) {
       if (!(D > d)) return { error: '大径は小径より大きい必要があります。' };
